@@ -53,17 +53,46 @@ products.forEach((product) => {
       Added
     </div>
 
-    <button class="add-to-cart-button button-primary">
+    <button class="add-to-cart-button button-primary js-add-to-cart"
+    data-product-id="${product.id}"
+    >
       Add to Cart
     </button>
   </div>
   `;
-})
 
-console.log(productsHTML);
+});
+
 
 //putting the html onto the webpage using DOM the innerHTML replaces all the html with the html written in js file.
 
 document.querySelector('.js-products-grid').
   innerHTML = productsHTML
 
+// Making add to cart button reactive using DOM by adding an eventlistener
+// This applies to all the add-to-cart button
+// The data attribue in HTML can attach any info to an element 
+// We 1st attached productName to the button using data attribute
+// when we click the button we get the product name out
+// and then added the productName to the cart
+document.querySelectorAll('.js-add-to-cart').forEach((button) => {
+  button.addEventListener('click',() => {
+    const productId = button.dataset.productId;
+    let matchingItem;
+
+    cart.forEach((item) => {
+      if(productId === item.productId){
+        matchingItem = item;
+      }
+    })
+    if(matchingItem){
+      matchingItem.quantity += 1;
+    }else{
+      cart.push({
+        productId : productId,
+        quantity    :     1
+      });
+    }
+    console.log(cart);
+  });
+});
