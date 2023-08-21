@@ -1,3 +1,12 @@
+// This is an array which consits of multiple objects/products.
+//  We store the array in a variable.
+// Here we are saving the data in js
+//THe benefit of generating the HTML is that we don't have to write all the HTML again to add
+// a new product , we can just add a new object in the products array
+
+
+
+
 const products = [
   {
     id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
