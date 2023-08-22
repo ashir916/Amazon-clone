@@ -6,8 +6,10 @@
 
 //Also we combine all the HTML for all the products together by storing all the elements into a single string
 
-import { cart } from '../data/cart.js';
+import { cart , addToCart} from '../data/cart.js';
 import { products } from '../data/products.js';
+
+
 let productsHTML = '';
 
 products.forEach((product) => {
@@ -72,38 +74,24 @@ products.forEach((product) => {
 document.querySelector('.js-products-grid').
   innerHTML = productsHTML
 
-// Making add to cart button reactive using DOM by adding an eventlistener
-// This applies to all the add-to-cart button
-// The data attribue in HTML can attach any info to an element 
-// We 1st attached productName to the button using data attribute
-// when we click the button we get the product name out
-// and then added the productName to the cart
+// This function updates the cart quantity on the website
+ 
+function updateCartQuantity(){
+  let cartQuantity = 0;
+    cart.forEach((cartItem) => {
+      cartQuantity += cartItem.quantity;
+    });
+    document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
+};
+
 document.querySelectorAll('.js-add-to-cart').forEach((button) => {
   button.addEventListener('click',() => {
     const productId = button.dataset.productId;
-    let matchingItem;
-
-    cart.forEach((item) => {
-      if(productId === item.productId){
-        matchingItem = item;
-      }
-    })
-    if(matchingItem){
-      matchingItem.quantity += 1;
-    }else{
-      cart.push({
-        productId : productId,
-        quantity    :     1
-      });
-    }
-
+    addToCart(productId);
+    updateCartQuantity();
     // Here we calculate cart quantity looping through the cart array and 
     //saving cart quantity and displaying it onto the webpage using DOM
-    let cartQuantity = 0;
-    cart.forEach((item) => {
-      cartQuantity += item.quantity;
-    });
-    document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
+    
     
   });
 });
