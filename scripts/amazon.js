@@ -5,6 +5,9 @@
 // created above three time because we have three objects in the array
 
 //Also we combine all the HTML for all the products together by storing all the elements into a single string
+
+import {cart} from '../data/cart.js';
+
 let productsHTML = '';
 
 products.forEach((product) => {
