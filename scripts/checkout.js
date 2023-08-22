@@ -1,11 +1,16 @@
 import { cart } from "../data/cart.js";
 import { products } from "../data/products.js";
+import { formatCurrency } from "./utils/money.js";
 
 let cartSummaryHTML = '';
 
+//for each cart item we are going to generate HTMLand  we are going to loop through the cart
+// we locate the product by using the product id
 cart.forEach((cartItem) => {
   const productId = cartItem.productId;
 
+  // we'll search the array for full product details
+  // we'll loop through the products array
   let matchingProduct;
   products.forEach((product) => {
     if(product.id === productId){
@@ -27,7 +32,7 @@ cartSummaryHTML +=
       ${matchingProduct.name}
     </div>
     <div class="product-price">
-      $${matchingProduct.priceCents/100}
+      $${formatCurrency(matchingProduct.priceCents)}
     </div>
     <div class="product-quantity">
       <span>
@@ -49,7 +54,7 @@ cartSummaryHTML +=
     <div class="delivery-option">
       <input type="radio" checked
         class="delivery-option-input"
-        name="delivery-option-1">
+        name="delivery-option-${matchingProduct.id}">
       <div>
         <div class="delivery-option-date">
           Tuesday, June 21
@@ -62,7 +67,7 @@ cartSummaryHTML +=
     <div class="delivery-option">
       <input type="radio"
         class="delivery-option-input"
-        name="delivery-option-1">
+        name="delivery-option-${matchingProduct.id}">
       <div>
         <div class="delivery-option-date">
           Wednesday, June 15
@@ -75,7 +80,7 @@ cartSummaryHTML +=
     <div class="delivery-option">
       <input type="radio"
         class="delivery-option-input"
-        name="delivery-option-1">
+        name="delivery-option-${matchingProduct.id}">
       <div>
         <div class="delivery-option-date">
           Monday, June 13
@@ -91,4 +96,5 @@ cartSummaryHTML +=
 `;
 });
 
+// we are going to replace the html by using DOM
 document.querySelector('.js-order-summary').innerHTML = cartSummaryHTML;
